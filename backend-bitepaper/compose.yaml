@@ -1,6 +1,0 @@
-﻿services:
-  bitepaper.api:
-    image: bitepaper.api
-    build:
-      context: .
-      dockerfile: BitePaper.Api/Dockerfile
