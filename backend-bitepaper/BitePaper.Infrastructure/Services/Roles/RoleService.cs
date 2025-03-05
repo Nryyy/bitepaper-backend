@@ -16,8 +16,8 @@ namespace BitePaper.Infrastructure.Services.Roles
             _roleRepository = roleRepository;
         }
         public async Task<List<Role>> GetAllAsync() => await _roleRepository.GetAllAsync();
-        public async Task<Role?> GetByIdAsync(int id) => await _roleRepository.GetByIdAsync(id);
+        public async Task<Role?> GetByIdAsync(string id) => await _roleRepository.GetByIdAsync(id);
         public async Task CreateAsync(Role role) => await _roleRepository.CreateAsync(role);
-        public async Task DeleteAsync(int id) => await _roleRepository.DeleteAsync(id);
+        public async Task DeleteAsync(string id) => await _roleRepository.DeleteAsync(id);
     }
 }

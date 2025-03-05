@@ -12,7 +12,7 @@ namespace BitePaper.Models.Entities
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public int Id { get; set; } = 0;
+        public string Id { get; set; } = string.Empty;
 
         [BsonElement("name")]
         public string Name { get; set; } = string.Empty;

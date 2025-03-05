@@ -5,19 +5,19 @@ using BitePaper.Models.Entities;
 
 namespace BitePaper.Api.Controllers.Roles
 {
-    public class RoleEndpoint : Endpoint<Role>
+    public class DeleteRoleEndpoint : Endpoint<Role>
     {
         private readonly IMediator _mediator;
 
-        public RoleEndpoint(IMediator mediator) => _mediator = mediator;
+        public DeleteRoleEndpoint(IMediator mediator) => _mediator = mediator;
         public override void Configure()
         {
-            Post("/roles");
+            Delete("/role-delete/{id}");
             AllowAnonymous();
-        }
+        } 
         public override async Task HandleAsync(Role request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new CreateRoleCommand(request), cancellationToken);
+            await _mediator.Send(new DeleteRoleCommand(request.Id), cancellationToken);
             await SendNoContentAsync(cancellationToken);
         }
     }

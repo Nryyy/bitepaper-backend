@@ -8,5 +8,5 @@ using BitePaper.Models.Entities;
 
 namespace BitePaper.Application.Commands.Roles
 {
-    public record DeleteRoleCommand(string Id) : IRequest;
+    public record GetByIdRoleCommand(string Id) : IRequest<Role>;
 }

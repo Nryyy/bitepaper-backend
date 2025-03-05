@@ -18,16 +18,16 @@ namespace BitePaper.Infrastructure.Repositories.Roles
         {
             var client = new MongoClient(config["MongoDB:ConnectionString"]);
             var database = client.GetDatabase(config["MongoDB:DatabaseName"]);
-            _collection = database.GetCollection<Role>(config["MongoDB:CollectionName"]);
+            _collection = database.GetCollection<Role>("Roles");
         }
 
         public async Task<List<Role>> GetAllAsync() =>
             await _collection.Find(_ => true).ToListAsync();
-        public async Task<Role?> GetByIdAsync(int id) =>
+        public async Task<Role?> GetByIdAsync(string id) =>
             await _collection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
         public async Task CreateAsync(Role role) => await _collection.InsertOneAsync(role);
 
-        public async Task DeleteAsync(int id) => await _collection.DeleteOneAsync(x => x.Id == id);
+        public async Task DeleteAsync(string id) => await _collection.DeleteOneAsync(x => x.Id == id);
     }
 }

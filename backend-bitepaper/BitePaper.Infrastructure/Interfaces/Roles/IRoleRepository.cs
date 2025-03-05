@@ -10,8 +10,8 @@ namespace BitePaper.Infrastructure.Interfaces.Roles
     public interface IRoleRepository
     {
         Task<List<Role>> GetAllAsync();
-        Task<Role?> GetByIdAsync(int id);
+        Task<Role?> GetByIdAsync(string id);
         Task CreateAsync(Role role);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(string id);
     }
 }
