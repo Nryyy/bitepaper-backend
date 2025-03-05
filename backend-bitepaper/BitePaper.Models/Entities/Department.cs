@@ -3,15 +3,15 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BitePaper.Models.Entities;
 
-public class TestEntity
+public class Department
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; } = string.Empty;
-
+    public ObjectId Id { get; set; }
+    
     [BsonElement("name")]
     public string Name { get; set; } = string.Empty;
-
-    [BsonElement("description")]
-    public string Description { get; set; } = string.Empty;
+    
+    [BsonElement("head")]
+    public string Head { get; set; } = string.Empty;
 }
