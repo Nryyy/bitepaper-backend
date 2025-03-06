@@ -7,6 +7,7 @@ using BitePaper.Infrastructure.Repositories.Roles;
 using BitePaper.Infrastructure.Services.Departments;
 using BitePaper.Infrastructure.Services.Roles;
 using FastEndpoints;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
