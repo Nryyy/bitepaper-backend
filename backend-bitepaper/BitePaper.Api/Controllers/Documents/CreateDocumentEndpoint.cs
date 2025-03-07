@@ -5,22 +5,16 @@ using MediatR;
 
 namespace BitePaper.Api.Controllers.Documents
 {
-    public class CreateDocumentEndpoint : Endpoint<Document>
+    public class CreateDocumentEndpoint(IMediator mediator) : Endpoint<Document>
     {
-        private readonly IMediator _mediator;
-        public CreateDocumentEndpoint(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         public override void Configure()
         {
-            Post("/create-document");
+            Post("document/create");
             AllowAnonymous();
         }
         public override async Task HandleAsync(Document request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new CreateDocumentCommand(request), cancellationToken);
+            await mediator.Send(new CreateDocumentCommand(request), cancellationToken);
             await SendNoContentAsync(cancellationToken);
         }
 

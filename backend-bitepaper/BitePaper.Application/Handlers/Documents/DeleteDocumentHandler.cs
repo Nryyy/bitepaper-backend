@@ -4,10 +4,10 @@ using MediatR;
 
 namespace BitePaper.Application.Handlers.Documents
 {
-    public class DeleteDocumentCommandHandler : IRequestHandler<DeleteDocumentCommand>
+    public class DeleteDocumentHandler : IRequestHandler<DeleteDocumentCommand>
     {
         private readonly IDocumentService _documentService;
-        public DeleteDocumentCommandHandler(IDocumentService documentService)
+        public DeleteDocumentHandler(IDocumentService documentService)
         {
             _documentService = documentService;
         }

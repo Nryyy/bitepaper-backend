@@ -5,10 +5,10 @@ using MediatR;
 
 namespace BitePaper.Application.Handlers.Documents
 {
-    public class GetAllDocumentCommandHandler : IRequestHandler<GetAllDocumentQuery, List<Document>>
+    public class GetAllDocumentsHandler : IRequestHandler<GetAllDocumentQuery, List<Document>>
     {
         private readonly IDocumentService _documentService;
-        public GetAllDocumentCommandHandler(IDocumentService documentService)
+        public GetAllDocumentsHandler(IDocumentService documentService)
         {
             _documentService = documentService;
         }

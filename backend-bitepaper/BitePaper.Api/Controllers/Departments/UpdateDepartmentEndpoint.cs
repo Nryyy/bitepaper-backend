@@ -3,30 +3,20 @@ using BitePaper.Application.Queries.Departments;
 using BitePaper.Models.Entities;
 using FastEndpoints;
 using MediatR;
-using MongoDB.Bson;
 
 namespace BitePaper.Api.Controllers.Departments;
 
-public class UpdateDepartmentEndpoint : Endpoint<Department>
+public class UpdateDepartmentEndpoint(IMediator mediator) : Endpoint<Department>
 {
-    private readonly IMediator _mediator;
-
-    public UpdateDepartmentEndpoint(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     public override void Configure()
     {
-        Put("/departments-update/{id}");
+        Put("department/update/{id}");
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(Department req, CancellationToken ct)
+    public override async Task HandleAsync(Department request, CancellationToken ct)
     {
-        var departmentId = Route<ObjectId>("id");
-        
-        var department = await _mediator.Send(new GetDepartmentByIdQuery(departmentId), ct);
+        var department = await mediator.Send(new GetDepartmentByIdQuery(request.Id), ct);
         
         if (department == null)
         {
@@ -34,7 +24,7 @@ public class UpdateDepartmentEndpoint : Endpoint<Department>
             return;
         }
         
-        await _mediator.Send(new UpdateDepartmentCommand(req), ct);
+        await mediator.Send(new UpdateDepartmentCommand(request), ct);
         
         await SendNoContentAsync(ct);
     }

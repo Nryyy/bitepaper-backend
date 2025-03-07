@@ -1,33 +1,21 @@
 using BitePaper.Application.Commands.Departments;
-using BitePaper.Models.DTOs.Request;
-using BitePaper.Models.Entities;
+using BitePaper.Models.DTOs.Request.Department;
 using FastEndpoints;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 
 namespace BitePaper.Api.Controllers.Departments;
 
-public class DeleteDepartmentEndpoint : EndpointWithoutRequest
+public class DeleteDepartmentEndpoint(IMediator mediator) : Endpoint<DeleteDepartmentRequest>
 {
-    private readonly IMediator _mediator;
-
-    public DeleteDepartmentEndpoint(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     public override void Configure()
     {
-        Delete("/department-delete/{id}");
+        Delete("department/delete/{id}");
         AllowAnonymous();
     }
     
-    public override async Task HandleAsync(CancellationToken ct)
+    public override async Task HandleAsync(DeleteDepartmentRequest request,CancellationToken ct)
     {
-        var departmentId = Route<ObjectId>("id");
-        
-        await _mediator.Send(new DeleteDepartmentCommand(departmentId), ct);
+        await mediator.Send(new DeleteDepartmentCommand(request.Id), ct);
         await SendNoContentAsync(ct);
     }
 }
