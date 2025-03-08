@@ -20,7 +20,7 @@ public class DepartmentRepository : IDepartmentRepository
     public async Task<List<Department>> GetAllAsync() =>  
         await _departments.Find(_ => true).ToListAsync();
 
-    public async Task<Department?> GetByIdAsync(ObjectId id) =>
+    public async Task<Department?> GetByIdAsync(string id) =>
         await _departments.Find(x => x.Id == id).FirstOrDefaultAsync();
 
 
@@ -30,6 +30,6 @@ public class DepartmentRepository : IDepartmentRepository
     public async Task UpdateAsync(Department department) =>
         await _departments.ReplaceOneAsync(x => x.Id == department.Id, department);
 
-    public Task DeleteAsync(ObjectId id) =>
+    public Task DeleteAsync(string id) =>
         _departments.DeleteOneAsync(x => x.Id == id);
 }

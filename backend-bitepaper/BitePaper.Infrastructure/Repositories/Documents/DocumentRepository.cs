@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BitePaper.Infrastructure.Interfaces.Documents;
+﻿using BitePaper.Infrastructure.Interfaces.Documents;
 using MongoDB.Driver;
 using BitePaper.Models.Entities;
 using Microsoft.Extensions.Configuration;
@@ -23,13 +18,13 @@ namespace BitePaper.Infrastructure.Repositories.Documents
         }
         public async Task<List<Document>> GetAllAsync() =>
             await _documents.Find(_ => true).ToListAsync();
-        public async Task<Document?> GetByIdAsync(ObjectId id) =>
+        public async Task<Document?> GetByIdAsync(string id) =>
             await _documents.Find(x => x.Id == id).FirstOrDefaultAsync();
         public async Task CreateAsync(Document document) =>
             await _documents.InsertOneAsync(document);
         public async Task UpdateAsync(Document document) =>
             await _documents.ReplaceOneAsync(x => x.Id == document.Id, document);
-        public Task DeleteAsync(ObjectId id) =>
+        public Task DeleteAsync(string id) =>
             _documents.DeleteOneAsync(x => x.Id == id);
     }
 }

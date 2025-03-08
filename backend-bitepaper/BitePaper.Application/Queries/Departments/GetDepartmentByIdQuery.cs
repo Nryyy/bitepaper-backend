@@ -4,4 +4,4 @@ using MongoDB.Bson;
 
 namespace BitePaper.Application.Queries.Departments;
 
-public record GetDepartmentByIdQuery(ObjectId id) : IRequest<Department?>;
+public record GetDepartmentByIdQuery(string id) : IRequest<Department?>;

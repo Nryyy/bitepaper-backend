@@ -15,8 +15,8 @@ public class DepartmentService : IDepartmentService
     }
     
     public async Task<List<Department>> GetAllAsync() => await _departmentRepository.GetAllAsync();
-    public async Task<Department?> GetByIdAsync(ObjectId id) => await _departmentRepository.GetByIdAsync(id);
+    public async Task<Department?> GetByIdAsync(string id) => await _departmentRepository.GetByIdAsync(id);
     public async Task CreateAsync(Department department) => await _departmentRepository.CreateAsync(department);
     public async Task UpdateAsync(Department department) => await _departmentRepository.UpdateAsync(department);
-    public async Task DeleteAsync(ObjectId id) => await _departmentRepository.DeleteAsync(id);
+    public async Task DeleteAsync(string id) => await _departmentRepository.DeleteAsync(id);
 }

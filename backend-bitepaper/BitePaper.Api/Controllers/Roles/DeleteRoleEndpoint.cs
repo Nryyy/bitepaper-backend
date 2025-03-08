@@ -1,23 +1,21 @@
 ﻿using BitePaper.Application.Commands.Roles;
+using BitePaper.Models.DTOs.Request.Role;
 using FastEndpoints;
 using MediatR;
-using BitePaper.Models.Entities;
 
 namespace BitePaper.Api.Controllers.Roles
 {
-    public class DeleteRoleEndpoint : Endpoint<Role>
+    public class DeleteRoleEndpoint(IMediator mediator) : Endpoint<DeleteRoleRequest>
     {
-        private readonly IMediator _mediator;
-
-        public DeleteRoleEndpoint(IMediator mediator) => _mediator = mediator;
         public override void Configure()
         {
-            Delete("/role-delete/{id}");
+            Delete("role/delete/{id}");
             AllowAnonymous();
         } 
-        public override async Task HandleAsync(Role request, CancellationToken cancellationToken)
+        
+        public override async Task HandleAsync(DeleteRoleRequest request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new DeleteRoleCommand(request.Id), cancellationToken);
+            await mediator.Send(new DeleteRoleCommand(request.Id), cancellationToken);
             await SendNoContentAsync(cancellationToken);
         }
     }

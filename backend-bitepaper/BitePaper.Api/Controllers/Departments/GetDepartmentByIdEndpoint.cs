@@ -1,31 +1,21 @@
 using BitePaper.Application.Queries.Departments;
-using BitePaper.Models.Entities;
+using BitePaper.Models.DTOs.Request.Department;
 using FastEndpoints;
 using MediatR;
-using MongoDB.Bson;
 
 namespace BitePaper.Api.Controllers.Departments;
 
-public class GetDepartmentByIdEndpoint : EndpointWithoutRequest
+public class GetDepartmentByIdEndpoint(IMediator mediator) : Endpoint<GetDepartmentByIdRequest>
 {
-    private readonly IMediator _mediator;
-
-    public GetDepartmentByIdEndpoint(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     public override void Configure()
     {
-        Get("/department/{id}");
+        Get("department/{id}");
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(CancellationToken ct)
+    public override async Task HandleAsync(GetDepartmentByIdRequest request,CancellationToken ct)
     {
-        var departmentId = Route<ObjectId>("id");
-        
-        var department = await _mediator.Send(new GetDepartmentByIdQuery(departmentId), ct);
+        var department = await mediator.Send(new GetDepartmentByIdQuery(request.Id), ct);
         
         if (department == null)
         {

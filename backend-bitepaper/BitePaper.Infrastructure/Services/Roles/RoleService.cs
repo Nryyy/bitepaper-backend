@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BitePaper.Infrastructure.Interfaces.Roles;
+﻿using BitePaper.Infrastructure.Interfaces.Roles;
 using BitePaper.Models.Entities;
 
 namespace BitePaper.Infrastructure.Services.Roles

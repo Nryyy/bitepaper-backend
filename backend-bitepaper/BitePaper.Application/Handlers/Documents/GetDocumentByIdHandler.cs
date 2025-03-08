@@ -5,16 +5,16 @@ using MediatR;
 
 namespace BitePaper.Application.Handlers.Documents
 {
-    public class GetByIdDocumentHandler : IRequestHandler<GetByIdDocumentQuery, Document?>
+    public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Document?>
     {
         private readonly IDocumentService _documentService;
 
-        public GetByIdDocumentHandler(IDocumentService documentService)
+        public GetDocumentByIdHandler(IDocumentService documentService)
         {
             _documentService = documentService;
         }
 
-        public async Task<Document?> Handle(GetByIdDocumentQuery request, CancellationToken cancellationToken) =>
+        public async Task<Document?> Handle(GetDocumentByIdQuery request, CancellationToken cancellationToken) =>
             await _documentService.GetByIdAsync(request.id);
     }
 }
