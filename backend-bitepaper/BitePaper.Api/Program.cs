@@ -12,14 +12,31 @@ using BitePaper.Infrastructure.Services.Documents;
 using BitePaper.Infrastructure.Services.Roles;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Registering FastEndpoints with Swagger
-builder.Services.AddFastEndpoints()
-    .SwaggerDocument();
+// Register Authorization and Authentication Services
+builder.Services.AddAuthorization();
 
-// Registering dependencies
+// Add FastEndpoints and Swagger
+builder.Services.AddFastEndpoints()
+    .SwaggerDocument()
+    .AddAuthentication(options =>
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    })
+    .AddCookie()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.CallbackPath = "/auth/google-callback";
+    });
+
+// Register Repositories and Services
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 
@@ -29,24 +46,25 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 
-// Setting up MediatR
+// Register MediatR Handlers
 builder.Services.AddMediatR(configuration =>
 {
     configuration.RegisterServicesFromAssembly(typeof(CreateDepartmentHandler).Assembly);
-    
     configuration.RegisterServicesFromAssembly(typeof(CreateRoleHandler).Assembly);
-    
     configuration.RegisterServicesFromAssembly(typeof(CreateDocumentHandler).Assembly);
 });
 
 var app = builder.Build();
 
+// Swagger for Development
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerGen(); // Generation of Swagger documentation
+    app.UseSwaggerGen(); // Generate Swagger documentation in development environment
 }
 
 app.UseHttpsRedirection();
 app.UseFastEndpoints();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
