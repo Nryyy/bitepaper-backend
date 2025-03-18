@@ -1,7 +1,7 @@
 using FastEndpoints;
 using Microsoft.AspNetCore.Authentication;
 
-namespace BitePaper.Api.Controllers.Auth;
+namespace BitePaper.Api.Controllers.Auth.Google;
 
 public class GoogleCallbackEndpoint : EndpointWithoutRequest
 {
