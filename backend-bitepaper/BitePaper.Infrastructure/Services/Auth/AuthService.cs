@@ -15,6 +15,7 @@ namespace BitePaper.Infrastructure.Services.Auth;
 public class AuthService : IAuthService
 {
     private readonly IMongoCollection<User> _collection;
+    private readonly IMongoCollection<Role> _roleCollection;
     private readonly IConfiguration _configuration;
     private readonly ILogger<AuthService> _logger;
 
@@ -35,6 +36,7 @@ public class AuthService : IAuthService
         var client = new MongoClient(connectionString);
         var database = client.GetDatabase(databaseName);
         _collection = database.GetCollection<User>("Users");
+        _roleCollection = database.GetCollection<Role>("Roles");
     }
 
     #region Login
@@ -131,9 +133,19 @@ public class AuthService : IAuthService
 
     private async Task<User?> CreateUser(RegisterDto request)
     {
+        var userRole = await _roleCollection
+            .Find(r => r.Name == "PendingConfirmation")
+            .FirstOrDefaultAsync();
+
+        if (userRole is null)
+        {
+            return null;
+        }
+        
         var user = new User
         {
             Email = request.Email,
+            Role = userRole,
             FullName = request.FullName,
             DateOfBirth = request.DateOfBirth,
             GoogleId = request.GoogleId ?? string.Empty,
