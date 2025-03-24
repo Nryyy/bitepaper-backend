@@ -51,6 +51,17 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+// CORS Configuration - Allow Everything
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 // Register MediatR Handlers
 builder.Services.AddMediatR(config =>
 {
@@ -75,6 +86,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerGen();
 }
+
+// Enable CORS
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
