@@ -17,16 +17,22 @@ namespace BitePaper.Models.Entities
         [BsonElement("title")]
         public string Title { get; set; } = string.Empty;
 
-        [BsonElement("content")]
-        public string Content { get; set; } = string.Empty;
+        [BsonElement("author_id")]
+        public string AuthorId { get; set; } = string.Empty;
 
-        //[BsonElement("ownerID")]
-        //public int OwnerID { get; set; }
+        [BsonElement("status")]
+        public Status Status { get; set; } = null!;
 
-        //[BsonElement("statusID")]
-        //public int StatusID { get; set; }
+        [BsonElement("file_id")]
+        public string FileId { get; set; } = string.Empty;
+
+        [BsonElement("file_type")]
+        public string FileType { get; set; } = string.Empty;
 
         [BsonElement("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [BsonElement("updated_at")]
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
     }
 }
