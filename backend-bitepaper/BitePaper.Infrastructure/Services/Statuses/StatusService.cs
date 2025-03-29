@@ -3,7 +3,7 @@ using BitePaper.Infrastructure.Interfaces.Statuses;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
-namespace BitePaper.Infrastructure.Repositories.Statuses
+namespace BitePaper.Infrastructure.Services.Statuses
 {
     public class StatusService : IStatusService
     {
