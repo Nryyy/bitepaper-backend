@@ -5,12 +5,12 @@ using FastEndpoints;
 
 namespace BitePaper.Api.Controllers.Auth;
 
-public class LoginEndpoint : Endpoint<LoginDto>
+public class RefreshTokenEndpoint : Endpoint<RefreshTokenRequest>
 {
     private readonly IAuthService _authService;
-    private readonly ILogger<LoginEndpoint> _logger;
+    private readonly ILogger<RefreshTokenEndpoint> _logger;
 
-    public LoginEndpoint(IAuthService authService, ILogger<LoginEndpoint> logger)
+    public RefreshTokenEndpoint(IAuthService authService, ILogger<RefreshTokenEndpoint> logger)
     {
         _authService = authService;
         _logger = logger;
@@ -18,20 +18,20 @@ public class LoginEndpoint : Endpoint<LoginDto>
 
     public override void Configure()
     {
-        Post("/auth/login");
+        Post("/auth/refresh-token");
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(LoginDto req, CancellationToken ct)
+    public override async Task HandleAsync(RefreshTokenRequest req, CancellationToken ct)
     {
-        var response = await _authService.LoginAsync(req);
+        var response = await _authService.RefreshTokenAsync(req.RefreshToken);
 
         if (response == null)
         {
-            await SendAsync(new { message = "Invalid credentials" }, StatusCodes.Status401Unauthorized, ct);
+            await SendAsync(new { message = "Invalid refresh token" }, StatusCodes.Status401Unauthorized, ct);
             return;
         }
 
         await SendAsync(response, StatusCodes.Status200OK, ct);
     }
-}
+} 
