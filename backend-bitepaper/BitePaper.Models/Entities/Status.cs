@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+﻿using System.Text.Json.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace BitePaper.Models.Entities
@@ -6,7 +6,7 @@ namespace BitePaper.Models.Entities
     public class Status
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string? Id { get; set; }
 
         [BsonElement("name")]
