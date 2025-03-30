@@ -1,5 +1,6 @@
 using BitePaper.Infrastructure.Interfaces.Auth;
 using BitePaper.Models.DTOs.Request.Auth;
+using BitePaper.Models.DTOs.Response.Auth;
 using FastEndpoints;
 
 namespace BitePaper.Api.Controllers.Auth;
@@ -23,14 +24,14 @@ public class RegisterEndpoint : Endpoint<RegisterDto>
 
     public override async Task HandleAsync(RegisterDto req, CancellationToken ct)
     {
-        var result = await _authService.RegisterAsync(req);
+        var response = await _authService.RegisterAsync(req);
 
-        if (result != "Registration successful!")
+        if (response == null)
         {
-            await SendAsync(new { message = result }, StatusCodes.Status400BadRequest, ct);
+            await SendAsync(new { message = "Registration failed" }, StatusCodes.Status400BadRequest, ct);
             return;
         }
 
-        await SendAsync(new { message = result }, StatusCodes.Status201Created, ct);
+        await SendAsync(response, StatusCodes.Status201Created, ct);
     }
 }
