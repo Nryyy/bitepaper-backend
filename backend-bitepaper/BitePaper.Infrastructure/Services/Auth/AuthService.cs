@@ -134,17 +134,10 @@ public class AuthService : IAuthService
 
     public async Task RevokeTokenAsync(string refreshToken)
     {
-        var storedToken = await _refreshTokenCollection
-            .Find(t => t.Token == refreshToken && t.IsRevoked == false)
-            .FirstOrDefaultAsync();
-
-        if (storedToken != null)
-        {
-            storedToken.IsRevoked = true;
-            await _refreshTokenCollection.ReplaceOneAsync(
-                t => t.Token == refreshToken,
-                storedToken);
-        }
+        var update = Builders<RefreshToken>.Update.Set(t => t.IsRevoked, true);
+        await _refreshTokenCollection.UpdateOneAsync(
+            t => t.Token == refreshToken && t.IsRevoked == false,
+            update);
     }
 
     private async Task<AuthResponseDto> GenerateAuthResponseAsync(User user)
@@ -161,6 +154,11 @@ public class AuthService : IAuthService
 
     private string CreateAccessToken(User user)
     {
+        if (string.IsNullOrEmpty(_jwtSettings.Secret))
+        {
+            throw new InvalidOperationException("JWT Secret is not configured.");
+        }
+
         var claims = new[]
         {
             new Claim(ClaimTypes.Email, user.Email),
@@ -189,7 +187,7 @@ public class AuthService : IAuthService
             .Find(t => t.UserId == user.Id && t.IsRevoked == false)
             .FirstOrDefaultAsync();
 
-        if (existingToken != null && existingToken.ExpiresAt > DateTime.UtcNow)
+        if (existingToken != null)
         {
             // Оновлюємо існуючий токен
             var newToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
@@ -206,7 +204,7 @@ public class AuthService : IAuthService
             return existingToken;
         }
 
-        // Створюємо новий токен тільки якщо немає активного
+        // Створюємо новий токен тільки якщо немає жодного токена для користувача
         var newRefreshToken = new RefreshToken
         {
             Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),

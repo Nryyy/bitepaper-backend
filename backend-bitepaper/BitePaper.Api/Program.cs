@@ -25,9 +25,11 @@ using BitePaper.Infrastructure.Services.Documents;
 using BitePaper.Infrastructure.Services.Roles;
 using BitePaper.Infrastructure.Services.Users;
 using BitePaper.Infrastructure.Services.Statuses;
+using BitePaper.Infrastructure.Settings;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -35,6 +37,9 @@ var configuration = builder.Configuration;
 // Logger
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+
+// Configure JWT Settings
+builder.Services.Configure<JwtSettings>(configuration.GetSection("JWT"));
 
 // Authorization & Authentication
 builder.Services.AddAuthorization();
