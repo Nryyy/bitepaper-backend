@@ -28,8 +28,6 @@ using BitePaper.Infrastructure.Services.Statuses;
 using BitePaper.Infrastructure.Settings;
 using FastEndpoints;
 using FastEndpoints.Swagger;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -129,8 +127,8 @@ void ConfigureAuthentication(IServiceCollection services, IConfiguration config)
     .AddCookie()
     .AddGoogle(options =>
     {
-        options.ClientId = config["Authentication:Google:ClientId"];
-        options.ClientSecret = config["Authentication:Google:ClientSecret"];
+        options.ClientId = config["Authentication:Google:ClientId"] ?? throw new InvalidOperationException();
+        options.ClientSecret = config["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException();
         options.CallbackPath = "/auth/google-callback";
     })
     .AddJwtBearer(options =>
@@ -146,7 +144,7 @@ void ConfigureAuthentication(IServiceCollection services, IConfiguration config)
             ValidateAudience = true,
             ValidAudience = config["JWT:Audience"],
             ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero // Немає затримки при перевірці токена
+            ClockSkew = TimeSpan.Zero
         };
     });
 }

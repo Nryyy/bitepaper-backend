@@ -1,12 +1,10 @@
 ﻿using BitePaper.Models.Entities;
 
-namespace BitePaper.Infrastructure.Interfaces.Statuses
+namespace BitePaper.Infrastructure.Interfaces.Statuses;
+public interface IStatusService
 {
-    public interface IStatusService
-    {
-        Task<List<Status>> GetAllAsync();
-        Task<Status?> GetByIdAsync(string id);
-        Task CreateAsync(Status status);
-        Task DeleteAsync(string id);
-    }
+    Task<List<Status>> GetAllAsync();
+    Task<Status?> GetByIdAsync(string id);
+    Task CreateAsync(Status status);
+    Task DeleteAsync(string id);
 }

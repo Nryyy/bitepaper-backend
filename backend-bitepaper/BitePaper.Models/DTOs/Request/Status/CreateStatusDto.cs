@@ -1,7 +1,5 @@
-namespace BitePaper.Models.DTOs.Request.Status
+namespace BitePaper.Models.DTOs.Request.Status;
+public class CreateStatusDto
 {
-    public class CreateStatusDto
-    {
-        public string Name { get; set; } = string.Empty;
-    }
-} 
+    public string Name { get; set; } = string.Empty;
+}

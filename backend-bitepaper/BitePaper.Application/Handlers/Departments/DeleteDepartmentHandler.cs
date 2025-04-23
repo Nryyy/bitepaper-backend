@@ -4,15 +4,8 @@ using MediatR;
 
 namespace BitePaper.Application.Handlers.Departments;
 
-public class DeleteDepartmentHandler: IRequestHandler<DeleteDepartmentCommand>
+public class DeleteDepartmentHandler(IDepartmentService departmentService) : IRequestHandler<DeleteDepartmentCommand>
 {
-    private readonly IDepartmentService _departmentService;
-
-    public DeleteDepartmentHandler(IDepartmentService departmentService)
-    {
-        _departmentService = departmentService;
-    }
-    
     public async Task Handle(DeleteDepartmentCommand request, CancellationToken cancellationToken) =>
-        await _departmentService.DeleteAsync(request.id);
+        await departmentService.DeleteAsync(request.id);
 }

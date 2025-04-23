@@ -2,18 +2,9 @@
 using BitePaper.Infrastructure.Interfaces.Statuses;
 using MediatR;
 
-namespace BitePaper.Application.Handlers.Statuses
+namespace BitePaper.Application.Handlers.Statuses;
+public class DeleteStatusHandler(IStatusService statusService) : IRequestHandler<DeleteStatusCommand>
 {
-    public class DeleteStatusHandler : IRequestHandler<DeleteStatusCommand>
-    {
-        private readonly IStatusService _statusService;
-        public DeleteStatusHandler(IStatusService statusService)
-        {
-            _statusService = statusService;
-        }
-        public async Task Handle(DeleteStatusCommand request, CancellationToken cancellationToken)
-        {
-            await _statusService.DeleteAsync(request.Id);
-        }
-    }
+    public async Task Handle(DeleteStatusCommand request, CancellationToken cancellationToken) =>
+        await statusService.DeleteAsync(request.Id);
 }

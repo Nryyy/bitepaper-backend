@@ -5,15 +5,9 @@ using MediatR;
 
 namespace BitePaper.Application.Handlers.Departments;
 
-public class GetDepartmentByIdHandler : IRequestHandler<GetDepartmentByIdQuery, Department?>
+public class GetDepartmentByIdHandler(IDepartmentService departmentService)
+    : IRequestHandler<GetDepartmentByIdQuery, Department?>
 {
-    private readonly IDepartmentService _departmentService;
-
-    public GetDepartmentByIdHandler(IDepartmentService departmentService)
-    {
-        _departmentService = departmentService;
-    }
-    
     public async Task<Department?> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken) =>
-        await _departmentService.GetByIdAsync(request.id);
+        await departmentService.GetByIdAsync(request.id);
 }

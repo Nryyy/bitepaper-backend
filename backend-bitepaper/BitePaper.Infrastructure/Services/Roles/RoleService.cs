@@ -1,18 +1,11 @@
 ﻿using BitePaper.Infrastructure.Interfaces.Roles;
 using BitePaper.Models.Entities;
 
-namespace BitePaper.Infrastructure.Services.Roles
+namespace BitePaper.Infrastructure.Services.Roles;
+public class RoleService(IRoleRepository roleRepository) : IRoleService
 {
-    public class RoleService : IRoleService
-    {
-        private readonly IRoleRepository _roleRepository;
-        public RoleService(IRoleRepository roleRepository)
-        {
-            _roleRepository = roleRepository;
-        }
-        public async Task<List<Role>> GetAllAsync() => await _roleRepository.GetAllAsync();
-        public async Task<Role?> GetByIdAsync(string id) => await _roleRepository.GetByIdAsync(id);
-        public async Task CreateAsync(Role role) => await _roleRepository.CreateAsync(role);
-        public async Task DeleteAsync(string id) => await _roleRepository.DeleteAsync(id);
-    }
+    public async Task<List<Role>> GetAllAsync() => await roleRepository.GetAllAsync();
+    public async Task<Role?> GetByIdAsync(string id) => await roleRepository.GetByIdAsync(id);
+    public async Task CreateAsync(Role role) => await roleRepository.CreateAsync(role);
+    public async Task DeleteAsync(string id) => await roleRepository.DeleteAsync(id);
 }

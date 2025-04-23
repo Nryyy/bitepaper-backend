@@ -1,22 +1,13 @@
 using BitePaper.Infrastructure.Interfaces.Departments;
-using BitePaper.Infrastructure.Repositories.Departments;
 using BitePaper.Models.Entities;
-using MongoDB.Bson;
 
 namespace BitePaper.Infrastructure.Services.Departments;
 
-public class DepartmentService : IDepartmentService
+public class DepartmentService(IDepartmentRepository departmentRepository) : IDepartmentService
 {
-    private readonly IDepartmentRepository _departmentRepository;
-
-    public DepartmentService(IDepartmentRepository departmentRepository)
-    {
-        _departmentRepository = departmentRepository;
-    }
-    
-    public async Task<List<Department>> GetAllAsync() => await _departmentRepository.GetAllAsync();
-    public async Task<Department?> GetByIdAsync(string id) => await _departmentRepository.GetByIdAsync(id);
-    public async Task CreateAsync(Department department) => await _departmentRepository.CreateAsync(department);
-    public async Task UpdateAsync(Department department) => await _departmentRepository.UpdateAsync(department);
-    public async Task DeleteAsync(string id) => await _departmentRepository.DeleteAsync(id);
+    public async Task<List<Department>> GetAllAsync() => await departmentRepository.GetAllAsync();
+    public async Task<Department?> GetByIdAsync(string id) => await departmentRepository.GetByIdAsync(id);
+    public async Task CreateAsync(Department department) => await departmentRepository.CreateAsync(department);
+    public async Task UpdateAsync(Department department) => await departmentRepository.UpdateAsync(department);
+    public async Task DeleteAsync(string id) => await departmentRepository.DeleteAsync(id);
 }

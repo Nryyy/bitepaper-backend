@@ -1,7 +1,6 @@
 using BitePaper.Infrastructure.Interfaces.Departments;
 using BitePaper.Models.Entities;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace BitePaper.Infrastructure.Repositories.Departments;

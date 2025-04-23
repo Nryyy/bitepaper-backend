@@ -2,17 +2,9 @@
 using BitePaper.Infrastructure.Interfaces.Documents;
 using MediatR;
 
-namespace BitePaper.Application.Handlers.Documents
+namespace BitePaper.Application.Handlers.Documents;
+public class CreateDocumentHandler(IDocumentService documentService) : IRequestHandler<CreateDocumentCommand>
 {
-    public class CreateDocumentHandler : IRequestHandler<CreateDocumentCommand>
-    {
-        private readonly IDocumentService _documentService;
-        public CreateDocumentHandler(IDocumentService documentService)
-        {
-            _documentService = documentService;
-        }
-
-        public async Task Handle(CreateDocumentCommand request, CancellationToken cancellationToken) =>
-            await _documentService.CreateAsync(request.document);
-    }
+    public async Task Handle(CreateDocumentCommand request, CancellationToken cancellationToken) =>
+        await documentService.CreateAsync(request.document);
 }

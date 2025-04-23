@@ -4,14 +4,8 @@ using MediatR;
 
 namespace BitePaper.Application.Handlers.Departments;
 
-public class UpdateDepartmentHandler : IRequestHandler<UpdateDepartmentCommand>
+public class UpdateDepartmentHandler(IDepartmentService departmentService) : IRequestHandler<UpdateDepartmentCommand>
 {
-    private readonly IDepartmentService _departmentService;
-
-    public UpdateDepartmentHandler(IDepartmentService departmentService)
-    {
-        _departmentService = departmentService;
-    }
     public async Task Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken) =>
-        await _departmentService.UpdateAsync(request.department);
+        await departmentService.UpdateAsync(request.department);
 }

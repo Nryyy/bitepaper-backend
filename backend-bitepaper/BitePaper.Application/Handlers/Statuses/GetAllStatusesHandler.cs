@@ -3,18 +3,10 @@ using BitePaper.Infrastructure.Interfaces.Statuses;
 using BitePaper.Models.Entities;
 using MediatR;
 
-namespace BitePaper.Application.Handlers.Statuses
+namespace BitePaper.Application.Handlers.Statuses;
+public class GetAllStatusesHandler(IStatusService statusService)
+    : IRequestHandler<GetAllStatusesQuery, List<Status>>
 {
-    public class GetAllStatusesHandler : IRequestHandler<GetAllStatusesQuery, List<Status>>
-    {
-        private readonly IStatusService _statusService;
-        public GetAllStatusesHandler(IStatusService statusService)
-        {
-            _statusService = statusService;
-        }
-        public async Task<List<Status>> Handle(GetAllStatusesQuery request, CancellationToken cancellationToken)
-        {
-            return await _statusService.GetAllAsync();
-        }
-    }
+    public async Task<List<Status>> Handle(GetAllStatusesQuery request, CancellationToken cancellationToken) =>
+        await statusService.GetAllAsync();
 }

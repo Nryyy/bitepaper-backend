@@ -1,5 +1,4 @@
 using BitePaper.Models.Entities;
-using MongoDB.Bson;
 
 namespace BitePaper.Infrastructure.Interfaces.Departments;
 
