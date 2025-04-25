@@ -1,4 +1,5 @@
-﻿using BitePaper.Models.DTOs.Request.Logs;
+﻿using BitePaper.Application.Commands.Logs;
+using BitePaper.Models.DTOs.Request.Logs;
 using FastEndpoints;
 using MediatR;
 
@@ -13,7 +14,7 @@ namespace BitePaper.Api.Controllers.Logs
         }
         public override async Task HandleAsync(DeleteLogRequest request, CancellationToken ct)
         {
-            await mediator.Send(request, ct);
+            await mediator.Send(new DeleteLogCommand(request.Id), ct);
             await SendAsync("Delete succeed!", cancellation: ct);
         }
     }
