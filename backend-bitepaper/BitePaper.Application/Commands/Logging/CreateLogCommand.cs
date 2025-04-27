@@ -1,7 +1,7 @@
-﻿using BitePaper.Models.Entities;
+﻿using BitePaper.Models.DTOs.Request.Logs;
 using MediatR;
 
 namespace BitePaper.Application.Commands.Logs
 {
-    public record CreateLogCommand(Log log) : IRequest;
+    public record CreateLogCommand(CreateLogRequest Request) : IRequest;
 }

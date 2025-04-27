@@ -2,7 +2,6 @@
 using MongoDB.Driver;
 using BitePaper.Models.Entities;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
 
 namespace BitePaper.Infrastructure.Repositories.Documents
 {

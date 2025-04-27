@@ -9,6 +9,7 @@ using BitePaper.Application.Handlers.Roles;
 using BitePaper.Application.Handlers.Users;
 using BitePaper.Application.Handlers.Statuses;
 using BitePaper.Application.Handlers.Logs;
+using BitePaper.Application.Handlers.Signatures;
 using BitePaper.Infrastructure.Interfaces.Auth;
 using BitePaper.Infrastructure.Interfaces.Departments;
 using BitePaper.Infrastructure.Interfaces.Documents;
@@ -16,18 +17,21 @@ using BitePaper.Infrastructure.Interfaces.Roles;
 using BitePaper.Infrastructure.Interfaces.Users;
 using BitePaper.Infrastructure.Interfaces.Statuses;
 using BitePaper.Infrastructure.Interfaces.Logs;
+using BitePaper.Infrastructure.Interfaces.Signatures;
 using BitePaper.Infrastructure.Repositories.Logs;
 using BitePaper.Infrastructure.Repositories.Statuses;
 using BitePaper.Infrastructure.Repositories.Departments;
 using BitePaper.Infrastructure.Repositories.Documents;
 using BitePaper.Infrastructure.Repositories.Roles;
 using BitePaper.Infrastructure.Repositories.Users;
+using BitePaper.Infrastructure.Repositories.Signatures;
 using BitePaper.Infrastructure.Services.Auth;
 using BitePaper.Infrastructure.Services.Departments;
 using BitePaper.Infrastructure.Services.Documents;
 using BitePaper.Infrastructure.Services.Roles;
 using BitePaper.Infrastructure.Services.Users;
 using BitePaper.Infrastructure.Services.Statuses;
+using BitePaper.Infrastructure.Services.Signatures;
 using BitePaper.Infrastructure.Services.Logs;
 using BitePaper.Infrastructure.Settings;
 using FastEndpoints;
@@ -70,6 +74,9 @@ builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<ILogRepository, LogRepository>();
 builder.Services.AddScoped<ILogService, LogService>();
 
+builder.Services.AddScoped<ISignatureRepository, SignatureRepository>();
+builder.Services.AddScoped<ISignatureService, SignatureService>();
+
 // CORS Configuration - Allow Everything
 builder.Services.AddCors(options =>
 {
@@ -90,6 +97,7 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly);
     config.RegisterServicesFromAssembly(typeof(CreateStatusHandler).Assembly);
     config.RegisterServicesFromAssembly(typeof(CreateLogHandler).Assembly);
+    config.RegisterServicesFromAssembly(typeof(CreateSignatureHandler).Assembly);
 });
 
 // Register FastEndpoints & Swagger
