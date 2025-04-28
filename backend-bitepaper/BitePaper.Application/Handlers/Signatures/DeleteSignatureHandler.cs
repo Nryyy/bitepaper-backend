@@ -2,15 +2,14 @@
 using BitePaper.Infrastructure.Interfaces.Signatures;
 using MediatR;
 
-namespace BitePaper.Application.Handlers.Signatures
+namespace BitePaper.Application.Handlers.Signatures;
+
+public class DeleteSignatureHandler : IRequestHandler<DeleteSignatureCommand>
 {
-    public class DeleteSignatureHandler : IRequestHandler<DeleteSignatureCommand>
+    private readonly ISignatureService _signatureService;
+    public DeleteSignatureHandler(ISignatureService signatureService)
     {
-        private readonly ISignatureService _signatureService;
-        public DeleteSignatureHandler(ISignatureService signatureService)
-        {
-            _signatureService = signatureService;
-        }
-        public async Task Handle(DeleteSignatureCommand request, CancellationToken cancellationToken) => await _signatureService.DeleteAsync(request.id);
+        _signatureService = signatureService;
     }
+    public async Task Handle(DeleteSignatureCommand request, CancellationToken cancellationToken) => await _signatureService.DeleteAsync(request.id);
 }
