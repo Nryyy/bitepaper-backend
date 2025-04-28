@@ -2,16 +2,15 @@
 using BitePaper.Infrastructure.Interfaces.Logs;
 using MediatR;
 
-namespace BitePaper.Application.Handlers.Logs
+namespace BitePaper.Application.Handlers.Logs;
+
+public class DeleteLogHandler : IRequestHandler<DeleteLogCommand>
 {
-    public class DeleteLogHandler : IRequestHandler<DeleteLogCommand>
+    private readonly ILogService _logService;
+    public DeleteLogHandler(ILogService logService)
     {
-        private readonly ILogService _logService;
-        public DeleteLogHandler(ILogService logService)
-        {
-            _logService = logService;
-        }
-        public async Task Handle(DeleteLogCommand request, CancellationToken cancellationToken) =>
-            await _logService.DeleteAsync(request.id);
+        _logService = logService;
     }
+    public async Task Handle(DeleteLogCommand request, CancellationToken cancellationToken) =>
+        await _logService.DeleteAsync(request.id);
 }
