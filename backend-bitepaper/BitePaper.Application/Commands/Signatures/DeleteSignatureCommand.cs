@@ -1,6 +1,5 @@
 ﻿using MediatR;
 
-namespace BitePaper.Application.Commands.Signatures
-{
-    public record DeleteSignatureCommand(string id) : IRequest;
-}
+namespace BitePaper.Application.Commands.Signatures;
+
+public record DeleteSignatureCommand(string id) : IRequest;
