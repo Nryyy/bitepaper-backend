@@ -2,4 +2,4 @@
 using MediatR;
 
 namespace BitePaper.Application.Queries.Documents;
-public record GetDocumentByIdQuery(string Id) : IRequest<Document?>;
+public record GetDocumentByEmailQuery(string Id) : IRequest<List<Document?>>;

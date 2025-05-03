@@ -5,8 +5,8 @@ using MediatR;
 
 namespace BitePaper.Application.Handlers.Documents;
 public class GetDocumentByIdHandler(IDocumentService documentService)
-    : IRequestHandler<GetDocumentByIdQuery, Document?>
+    : IRequestHandler<GetDocumentByEmailQuery, List<Document?>>
 {
-    public async Task<Document?> Handle(GetDocumentByIdQuery request, CancellationToken cancellationToken) =>
-        await documentService.GetByIdAsync(request.Id);
+    public async Task<List<Document?>> Handle(GetDocumentByEmailQuery request, CancellationToken cancellationToken) =>
+        await documentService.GetByEmailAsync(request.Id);
 }

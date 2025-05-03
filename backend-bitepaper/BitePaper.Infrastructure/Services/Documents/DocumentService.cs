@@ -6,8 +6,8 @@ public class DocumentService(IDocumentRepository documentRepository) : IDocument
 {
     public async Task<List<Document>> GetAllAsync() =>
         await documentRepository.GetAllAsync();
-    public async Task<Document?> GetByIdAsync(string id) =>
-        await documentRepository.GetByIdAsync(id);
+    public async Task<List<Document?>> GetByEmailAsync(string email) =>
+        await documentRepository.GetByEmailAsync(email);
     public async Task CreateAsync(Document document) =>
         await documentRepository.CreateAsync(document);
     public async Task UpdateAsync(Document document) =>
