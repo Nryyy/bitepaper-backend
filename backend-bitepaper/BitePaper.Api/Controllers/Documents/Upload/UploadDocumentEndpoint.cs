@@ -1,24 +1,28 @@
 using BitePaper.Models.DTOs.Request.Document;
+using BitePaper.Models.Entities;
 using FastEndpoints;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Upload;
+using BitePaper.Infrastructure.Interfaces.Documents;
 
 namespace BitePaper.Api.Controllers.Documents.Upload;
 
 public class UploadDocumentEndpoint : Endpoint<UploadDocumentRequest>
 {
     private readonly IConfiguration _configuration;
+    private readonly IDocumentService _documentRepository;
 
-    public UploadDocumentEndpoint(IConfiguration configuration)
+    public UploadDocumentEndpoint(IConfiguration configuration, IDocumentService documentRepository)
     {
         _configuration = configuration;
+        _documentRepository = documentRepository;
     }
 
     public override void Configure()
     {
-        Post("/api/documents/upload");
+        Post("document/upload");
         AllowFileUploads();
         // TODO: Додайте відповідну авторизацію замість AllowAnonymous()
         AllowAnonymous();
@@ -78,15 +82,31 @@ public class UploadDocumentEndpoint : Endpoint<UploadDocumentRequest>
                 var permission = new Google.Apis.Drive.v3.Data.Permission
                 {
                     Type = "user",
-                    Role = "reader", // або "writer" для редагування
-                    EmailAddress = req.UserEmail // Використання email з запиту
+                    Role = "reader",
+                    EmailAddress = req.UserEmail
                 };
                 
                 var permissionRequest = service.Permissions.Create(permission, request.ResponseBody?.Id);
                 await permissionRequest.ExecuteAsync(ct);
                 
+                // Створення документа в базі даних
+                var document = new Document
+                {
+                    Title = req.Title ?? req.File.FileName,
+                    AuthorEmail = req.UserEmail,
+                    Status = new Status { Name = "Uploaded"},
+                    FileId = request.ResponseBody?.Id,
+                    FileType = req.File.ContentType,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+                
+                // Збереження документа в базі даних
+                await _documentRepository.CreateAsync(document);
+                
                 await SendOkAsync(new { 
-                    message = "Успішно завантажено в Google Drive", 
+                    message = "Успішно завантажено в Google Drive та збережено в базі даних", 
+                    documentId = document.Id,
                     fileId = request.ResponseBody?.Id,
                     viewLink = $"https://drive.google.com/file/d/{request.ResponseBody?.Id}/view",
                     accessGrantedTo = req.UserEmail

@@ -11,8 +11,8 @@ public class Document
     [BsonElement("title")]
     public string Title { get; set; } = string.Empty;
 
-    [BsonElement("author_id")]
-    public string AuthorId { get; set; } = string.Empty;
+    [BsonElement("author_email")]
+    public string AuthorEmail { get; set; } = string.Empty;
 
     [BsonElement("status")]
     public Status Status { get; set; } = null!;
