@@ -47,6 +47,11 @@ using BitePaper.Infrastructure.Repositories.Logs;
 using BitePaper.Infrastructure.Services.Logs;
 using BitePaper.Application.Handlers.Logs;
 
+using BitePaper.Infrastructure.Interfaces.Steps;
+using BitePaper.Infrastructure.Repositories.Steps;
+using BitePaper.Infrastructure.Services.Steps;
+using BitePaper.Application.Handlers.Steps;
+
 using BitePaper.Infrastructure.Settings;
 using FastEndpoints;
 using FastEndpoints.Swagger;
@@ -92,6 +97,9 @@ builder.Services.AddScoped<ISignatureService, SignatureService>();
 builder.Services.AddScoped<IDocumentCommentRepository, DocumentCommentRepository>();
 builder.Services.AddScoped<IDocumentCommentService, DocumentCommentService>();
 
+builder.Services.AddScoped<IStepRepository, StepRepository>();
+builder.Services.AddScoped<IStepService, StepService>();
+
 // CORS Configuration - Allow Everything
 builder.Services.AddCors(options =>
 {
@@ -114,6 +122,7 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(typeof(CreateLogHandler).Assembly);
     config.RegisterServicesFromAssembly(typeof(CreateSignatureHandler).Assembly);
     config.RegisterServicesFromAssembly(typeof(CreateDocumentCommentHandler).Assembly);
+    config.RegisterServicesFromAssembly(typeof(CreateStepHandler).Assembly);
 });
 
 // Register FastEndpoints & Swagger
