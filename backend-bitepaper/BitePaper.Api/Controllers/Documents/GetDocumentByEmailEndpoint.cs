@@ -4,16 +4,16 @@ using FastEndpoints;
 using MediatR;
 
 namespace BitePaper.Api.Controllers.Documents;
-public class GetDocumentByIdEndpoint(IMediator mediator) : Endpoint<GetDocumentByIdRequest>
+public class GetDocumentByEmailEndpoint(IMediator mediator) : Endpoint<GetDocumentByEmailRequest>
 {
     public override void Configure()
     {
-        Get("document/{id}");
+        Get("document/{email}");
         AllowAnonymous();
     }
-    public override async Task HandleAsync(GetDocumentByIdRequest request, CancellationToken ct)
+    public override async Task HandleAsync(GetDocumentByEmailRequest request, CancellationToken ct)
     {
-        var documents = await mediator.Send(new GetDocumentByIdQuery(request.Id), ct);
+        var documents = await mediator.Send(new GetDocumentByEmailQuery(request.Email), ct);
         await SendAsync(documents, cancellation: ct);
     }
 }

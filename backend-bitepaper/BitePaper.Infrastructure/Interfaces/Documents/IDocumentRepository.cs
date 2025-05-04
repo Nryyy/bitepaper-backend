@@ -4,7 +4,7 @@ namespace BitePaper.Infrastructure.Interfaces.Documents;
 public interface IDocumentRepository
 {
     Task<List<Document>> GetAllAsync();
-    Task<Document?> GetByIdAsync(string id);
+    Task<List<Document?>> GetByEmailAsync(string email);
     Task CreateAsync(Document document);
     Task UpdateAsync(Document document);
     Task DeleteAsync(string id);

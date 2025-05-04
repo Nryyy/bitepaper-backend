@@ -16,8 +16,8 @@ public class DocumentRepository : IDocumentRepository
     }
     public async Task<List<Document>> GetAllAsync() =>
         await _documents.Find(_ => true).ToListAsync();
-    public async Task<Document?> GetByIdAsync(string id) =>
-        await _documents.Find(x => x.Id == id).FirstOrDefaultAsync();
+    public async Task<List<Document>> GetByEmailAsync(string email) =>
+        await _documents.Find(x => x.AuthorEmail == email).ToListAsync();
     public async Task CreateAsync(Document document) =>
         await _documents.InsertOneAsync(document);
     public async Task UpdateAsync(Document document) =>
