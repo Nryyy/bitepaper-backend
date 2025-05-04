@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BitePaper.Application.Commands.Documents;
+﻿using BitePaper.Application.Commands.Documents;
 using BitePaper.Infrastructure.Interfaces.Documents;
 using MediatR;
 

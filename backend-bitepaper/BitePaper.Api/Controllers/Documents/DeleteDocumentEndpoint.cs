@@ -1,11 +1,7 @@
 ﻿using BitePaper.Application.Commands.Documents;
-using BitePaper.Application.Queries.Documents;
-using BitePaper.Models.DTOs.Request.Department;
 using BitePaper.Models.DTOs.Request.Document;
-using BitePaper.Models.Entities;
 using FastEndpoints;
 using MediatR;
-using MongoDB.Bson;
 
 namespace BitePaper.Api.Controllers.Documents
 {
