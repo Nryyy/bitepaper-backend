@@ -3,28 +3,60 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+
 using BitePaper.Application.Handlers.Departments;
-using BitePaper.Application.Handlers.Documents;
-using BitePaper.Application.Handlers.Roles;
-using BitePaper.Application.Handlers.Users;
-using BitePaper.Application.Handlers.Statuses;
-using BitePaper.Infrastructure.Interfaces.Auth;
 using BitePaper.Infrastructure.Interfaces.Departments;
-using BitePaper.Infrastructure.Interfaces.Documents;
-using BitePaper.Infrastructure.Interfaces.Roles;
-using BitePaper.Infrastructure.Interfaces.Users;
-using BitePaper.Infrastructure.Interfaces.Statuses;
-using BitePaper.Infrastructure.Repositories.Statuses;
 using BitePaper.Infrastructure.Repositories.Departments;
-using BitePaper.Infrastructure.Repositories.Documents;
-using BitePaper.Infrastructure.Repositories.Roles;
-using BitePaper.Infrastructure.Repositories.Users;
-using BitePaper.Infrastructure.Services.Auth;
 using BitePaper.Infrastructure.Services.Departments;
+
+using BitePaper.Application.Handlers.Documents;
+using BitePaper.Infrastructure.Interfaces.Documents;
+using BitePaper.Infrastructure.Repositories.Documents;
 using BitePaper.Infrastructure.Services.Documents;
+
+using BitePaper.Application.Handlers.Roles;
+using BitePaper.Infrastructure.Interfaces.Roles;
+using BitePaper.Infrastructure.Repositories.Roles;
 using BitePaper.Infrastructure.Services.Roles;
+
+using BitePaper.Application.Handlers.Users;
+using BitePaper.Infrastructure.Interfaces.Users;
+using BitePaper.Infrastructure.Repositories.Users;
 using BitePaper.Infrastructure.Services.Users;
+
+using BitePaper.Application.Handlers.Statuses;
+using BitePaper.Infrastructure.Interfaces.Statuses;
 using BitePaper.Infrastructure.Services.Statuses;
+using BitePaper.Infrastructure.Repositories.Statuses;
+
+using BitePaper.Application.Handlers.DocumentComments;
+using BitePaper.Infrastructure.Interfaces.DocumentComments;
+using BitePaper.Infrastructure.Repositories.DocumentComments;
+using BitePaper.Infrastructure.Services.DocumentComments;
+
+using BitePaper.Infrastructure.Interfaces.Auth;
+using BitePaper.Infrastructure.Services.Auth;
+
+using BitePaper.Infrastructure.Interfaces.Signatures;
+using BitePaper.Infrastructure.Repositories.Signatures;
+using BitePaper.Infrastructure.Services.Signatures;
+using BitePaper.Application.Handlers.Signatures;
+
+using BitePaper.Infrastructure.Interfaces.Logs;
+using BitePaper.Infrastructure.Repositories.Logs;
+using BitePaper.Infrastructure.Services.Logs;
+using BitePaper.Application.Handlers.Logs;
+
+using BitePaper.Infrastructure.Interfaces.Steps;
+using BitePaper.Infrastructure.Repositories.Steps;
+using BitePaper.Infrastructure.Services.Steps;
+using BitePaper.Application.Handlers.Steps;
+
+using BitePaper.Infrastructure.Interfaces.ApprovalFlows;
+using BitePaper.Infrastructure.Repositories.ApprovalFlows;
+using BitePaper.Infrastructure.Services.ApprovalFlows;
+using BitePaper.Application.Handlers.ApprovalFlows;
+
 using BitePaper.Infrastructure.Settings;
 using FastEndpoints;
 using FastEndpoints.Swagger;
@@ -61,6 +93,21 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IStatusService, StatusService>();
 
+builder.Services.AddScoped<ILogRepository, LogRepository>();
+builder.Services.AddScoped<ILogService, LogService>();
+
+builder.Services.AddScoped<ISignatureRepository, SignatureRepository>();
+builder.Services.AddScoped<ISignatureService, SignatureService>();
+
+builder.Services.AddScoped<IDocumentCommentRepository, DocumentCommentRepository>();
+builder.Services.AddScoped<IDocumentCommentService, DocumentCommentService>();
+
+builder.Services.AddScoped<IStepRepository, StepRepository>();
+builder.Services.AddScoped<IStepService, StepService>();
+
+builder.Services.AddScoped<IApprovalFlowRepository, ApprovalFlowRepository>();
+builder.Services.AddScoped<IApprovalFlowService, ApprovalFlowService>();
+
 // CORS Configuration - Allow Everything
 builder.Services.AddCors(options =>
 {
@@ -80,6 +127,11 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(typeof(CreateDocumentHandler).Assembly);
     config.RegisterServicesFromAssembly(typeof(CreateUserHandler).Assembly);
     config.RegisterServicesFromAssembly(typeof(CreateStatusHandler).Assembly);
+    config.RegisterServicesFromAssembly(typeof(CreateLogHandler).Assembly);
+    config.RegisterServicesFromAssembly(typeof(CreateSignatureHandler).Assembly);
+    config.RegisterServicesFromAssembly(typeof(CreateDocumentCommentHandler).Assembly);
+    config.RegisterServicesFromAssembly(typeof(CreateStepHandler).Assembly);
+    config.RegisterServicesFromAssembly(typeof(CreateApprovalFlowHandler).Assembly);
 });
 
 // Register FastEndpoints & Swagger
