@@ -4,7 +4,7 @@ using FastEndpoints;
 using MediatR;
 
 namespace BitePaper.Api.Controllers.Steps;
-    public class CreateStepEndpoint(IMediator mediator) : Endpoint<Step>
+public class CreateStepEndpoint(IMediator mediator) : Endpoint<Step>
 {
     public override void Configure()
     {
