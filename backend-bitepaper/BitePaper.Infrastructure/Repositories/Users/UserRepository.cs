@@ -19,6 +19,9 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByIdAsync(string id) =>
         await _collection.Find(u => u.Id == id).FirstOrDefaultAsync();
 
+    public async Task<User?> GetByEmailAsync(string email) =>
+        await _collection.Find(u => u.Email == email).FirstOrDefaultAsync();
+
     public async Task<IEnumerable<User>> GetAllAsync() =>
         await _collection.Find(_ => true).ToListAsync();
 

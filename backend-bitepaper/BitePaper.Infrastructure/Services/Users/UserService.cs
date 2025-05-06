@@ -10,6 +10,11 @@ public class UserService(IUserRepository userRepository) : IUserService
         return await userRepository.GetByIdAsync(id);
     }
 
+    public Task<User?> GetByEmailAsync(string email)
+    {
+        return userRepository.GetByEmailAsync(email);
+    }
+
     public async Task<IEnumerable<User>> GetAllAsync()
     {
         return await userRepository.GetAllAsync();
