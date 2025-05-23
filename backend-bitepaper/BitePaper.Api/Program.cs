@@ -57,6 +57,11 @@ using BitePaper.Infrastructure.Repositories.ApprovalFlows;
 using BitePaper.Infrastructure.Services.ApprovalFlows;
 using BitePaper.Application.Handlers.ApprovalFlows;
 
+using BitePaper.Infrastructure.Interfaces.Notifications;
+using BitePaper.Infrastructure.Repositories.Notifications;
+using BitePaper.Infrastructure.Services.Notifications;
+using BitePaper.Application.Handlers.Notifications;
+
 using BitePaper.Infrastructure.Settings;
 using FastEndpoints;
 using FastEndpoints.Swagger;
@@ -108,6 +113,9 @@ builder.Services.AddScoped<IStepService, StepService>();
 builder.Services.AddScoped<IApprovalFlowRepository, ApprovalFlowRepository>();
 builder.Services.AddScoped<IApprovalFlowService, ApprovalFlowService>();
 
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
 // CORS Configuration - Allow Everything
 builder.Services.AddCors(options =>
 {
@@ -132,6 +140,7 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(typeof(CreateDocumentCommentHandler).Assembly);
     config.RegisterServicesFromAssembly(typeof(CreateStepHandler).Assembly);
     config.RegisterServicesFromAssembly(typeof(CreateApprovalFlowHandler).Assembly);
+    config.RegisterServicesFromAssembly(typeof(CreateNotificationHandler).Assembly);
 });
 
 // Register FastEndpoints & Swagger
