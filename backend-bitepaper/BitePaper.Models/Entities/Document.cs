@@ -13,7 +13,10 @@ public class Document
 
     [BsonElement("author_email")]
     public string AuthorEmail { get; set; } = string.Empty;
-
+    
+    [BsonElement("users_with_access")]
+    public List<string> UsersWithAccessEmail { get; set; } = new();
+    
     [BsonElement("status")]
     public Status Status { get; set; } = null!;
 
