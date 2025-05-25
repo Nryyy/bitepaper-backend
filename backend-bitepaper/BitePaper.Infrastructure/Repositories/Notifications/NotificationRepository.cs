@@ -25,6 +25,9 @@ namespace BitePaper.Infrastructure.Repositories.Notifications
             await _notifications.ReplaceOneAsync(x => x.Id == notification.Id, notification);
         public Task DeleteAsync(string id) =>
             _notifications.DeleteOneAsync(x => x.Id == id);
-
+        public async Task<List<Notification>> GetAllByUserIdAsync(string userId)
+        {
+            return await _notifications.Find(x => x.UserId == userId).ToListAsync();
+        }
     }
 }

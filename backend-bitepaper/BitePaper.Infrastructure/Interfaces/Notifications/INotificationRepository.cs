@@ -9,5 +9,6 @@ namespace BitePaper.Infrastructure.Interfaces.Notifications
         Task CreateAsync(Notification notification);
         Task UpdateAsync(Notification notification);
         Task DeleteAsync(string id);
+        Task<List<Notification>> GetAllByUserIdAsync(string userId);
     }
 }
