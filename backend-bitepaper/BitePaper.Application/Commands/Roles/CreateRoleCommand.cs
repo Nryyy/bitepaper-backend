@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using BitePaper.Models.Entities;
+using BitePaper.Models.DTOs.Request.Role;
 
 namespace BitePaper.Application.Commands.Roles;
-public record CreateRoleCommand(Role Role) : IRequest;
+public record CreateRoleCommand(CreateRoleRequest Role) : IRequest;
